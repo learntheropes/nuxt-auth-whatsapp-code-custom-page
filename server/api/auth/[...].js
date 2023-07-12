@@ -23,7 +23,6 @@ export default NuxtAuthHandler({
   secret: nextAuthSecret,
   pages: {
     signIn: `/auth/login`,
-    // callback: `/auth/callback/whatsapp`,
     error: '/auth/error'
   },
   providers: [

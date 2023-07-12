@@ -3,7 +3,7 @@ definePageMeta({
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: `/dashboard`,
-  },
+  }
 });
 
 const {
@@ -11,6 +11,10 @@ const {
     callbackUrl
   }
 } = useRoute();
+
+const {
+  deploymentDomain
+} = useRuntimeConfig();
 
 const { signIn } = useAuth();
 
@@ -31,9 +35,11 @@ const sendWhatsapp = async () => {
   }
 };
 const verifyCode = () => {
-  const route = `/api/auth/callback/whatsapp?callbackUrl=${encodeURIComponent(callbackUrl)}&token=${encodeURIComponent(token.value)}&email=${encodeURIComponent(phone.value)}`
-  // navigateTo(`http://localhost:3000${route}`, { open: { target: '_blank'}, redirectCode: 200 })
-  navigateTo(`http://localhost:3000${route}`, { external: true, redirectCode: 200 })
+  const route = `/api/auth/callback/whatsapp?callbackUrl=${encodeURIComponent(callbackUrl)}&token=${encodeURIComponent(token.value)}&email=${encodeURIComponent(phone.value)}`;
+  navigateTo(`${deploymentDomain}${route}`, {
+    external: true,
+    redirectCode: 200
+  });
 }
 </script>
 
