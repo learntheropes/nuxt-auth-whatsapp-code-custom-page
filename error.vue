@@ -9,9 +9,21 @@ const handleError = () => clearError({ redirect: '/' });
 
 <template>
   <div>
-    <div>This is the error page</div>
     <div>Error Code: {{ error.statusCode }}</div>
-    <div>Error Message: {{ error.statusMessage }}</div>
-    <div><button @click="handleError">Go to the home page</button></div>
+    <devOnly>
+      <div>Error Message: {{ error.statusMessage }}</div>
+    </devOnly>
+    <devOnly>
+      <div>{{ error.stack }}</div>
+    </devOnly>
+    <div>
+      <button @click="handleError">Go to the home page</button>
+    </div>
   </div>
 </template>
+
+<style scoped>
+div {
+  padding: 1rem;
+}
+</style>

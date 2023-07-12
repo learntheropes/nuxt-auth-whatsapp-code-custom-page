@@ -6,29 +6,46 @@ definePageMeta({
   },
 });
 
+const {
+  query: {
+    callbackUrl
+  }
+} = useRoute();
+
 const { signIn } = useAuth();
 
-const email = ref(null);
+const phone = ref(null);
+const showPhone = ref(true);
+const token = ref(null);
 
-const signInHandler = async () => {
+const sendWhatsapp = async () => {
   try {
-    await signIn('magic-link', {
-      email: email.value,
+    await signIn('whatsapp', {
+      email: phone.value,
+      redirect: false,
       callbackUrl: `/dashboard`,
     });
+    showPhone.value = false
   } catch (error) {
     alert(error);
   }
 };
-const { query } = useRoute();
+const verifyCode = () => {
+  const route = `/api/auth/callback/whatsapp?callbackUrl=${encodeURIComponent(callbackUrl)}&token=${encodeURIComponent(token.value)}&email=${encodeURIComponent(phone.value)}`
+  // navigateTo(`http://localhost:3000${route}`, { open: { target: '_blank'}, redirectCode: 200 })
+  navigateTo(`http://localhost:3000${route}`, { external: true, redirectCode: 200 })
+}
 </script>
 
 <template>
-  This page query: {{ query }}
   <NuxtLayout>
-    <form @submit.prevent="signInHandler">
-      <input v-model="email" />
-      <input type="submit" value="Send email" />
+    <form v-if="showPhone" @submit.prevent="sendWhatsapp">
+      <input v-model="phone" />
+      <input type="submit" value="Send wa" />
+    </form>
+    <form v-else @submit.prevent="verifyCode">
+      <input v-model="token" />
+      <input type="submit" value="Verify code" />
     </form>
   </NuxtLayout>
 </template>

@@ -6,11 +6,9 @@ import { customFaunaAdapter } from '~/assets/js/customFaunaAdapter';
 const {
   nextAuthSecret,
   faunaSecret,
-  marangaduUser,
-  marangaduPassword,
-  marangaduHost,
-  marangaduPort,
-  marangaduFrom,
+  public: {
+    isDeployed
+  }
 } = useRuntimeConfig();
 
 const client = new faunadb.Client({
@@ -21,27 +19,54 @@ const client = new faunadb.Client({
 });
 
 export default NuxtAuthHandler({
-  debug: true,
+  debug: (isDeployed) ? false : true,
   secret: nextAuthSecret,
   pages: {
     signIn: `/auth/login`,
-    verifyRequest: `/auth/verify`,
+    // callback: `/auth/callback/whatsapp`,
+    error: '/auth/error'
   },
   providers: [
     EmailProvider.default({
-      id: 'magic-link',
-      name: 'send magic link by email',
+      id: 'whatsapp',
       type: 'email',
-      server: {
-        host: marangaduHost,
-        port: marangaduPort,
-        auth: {
-          user: marangaduUser,
-          pass: marangaduPassword,
-        },
+      maxAge: 60 * 10,
+      generateVerificationToken: () => {
+
+        return Math.floor(100000 + Math.random() * 900000);
       },
-      from: marangaduFrom,
-      maxAge: 60 * 60,
+      normalizeIdentifier: (identifier) => {
+
+        return identifier;
+      },
+      sendVerificationRequest: async ({ identifier, url, _provider, _theme }) => {
+
+        // const {
+        //   auth: {
+        //     messageContent
+        //   }
+        // } = await useStorage('db').getItem(`${locale}.json`);
+        const messageContent = 'Your verification code is:';
+
+        const token = new URLSearchParams(url.split('?')[1]).get("token");
+
+        try {
+         
+          await $fetch(`/api/whatsapp/send-message/${identifier}`, {
+            method: 'POST',
+            body: {
+              message: `${messageContent} *${token}*`
+            },
+            headers: {
+              'content-type': 'application/json',
+              'authorization': `token ${nextAuthSecret}`
+            }
+          });
+        } catch (error) {
+
+          throw createError(error);
+        }
+      }
     }),
   ],
   adapter: customFaunaAdapter(client),
