@@ -13,7 +13,9 @@ const {
 } = useRoute();
 
 const {
-  deploymentDomain
+  public: {
+    deploymentDomain
+  }
 } = useRuntimeConfig();
 
 const { signIn } = useAuth();
@@ -45,6 +47,7 @@ const verifyCode = () => {
 
 <template>
   <NuxtLayout>
+    <h1>Login</h1>
     <form v-if="showPhone" @submit.prevent="sendWhatsapp">
       <input v-model="phone" />
       <input type="submit" value="Send wa" />
