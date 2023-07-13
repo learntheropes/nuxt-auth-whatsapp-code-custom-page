@@ -12,7 +12,7 @@ RUN apt-get install -y chromium
 WORKDIR /app
 
 # Bundle your app source inside the docker image
-ADD . /app/
+COPY . .
 
 # Install all the dependencies
 RUN npm install
