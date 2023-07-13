@@ -14,15 +14,6 @@ WORKDIR /app
 # Bundle your app source inside the docker image
 COPY . .
 
-# Install all the dependencies
-RUN npm install
-
-# Build the nuxt app
-RUN npm run build
-
-# Your app binds to port 8080 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
-EXPOSE 8080
-
 # Set environment variable to disable Chromium's sandbox (this is required if you are running as root)
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -49,6 +40,15 @@ ENV TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
 
 ARG TELEGRAM_CHAT_ID
 ENV TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+
+# Install all the dependencies
+RUN npm install
+
+# Build the nuxt app
+RUN npm run build
+
+# Your app binds to port 8080 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
+EXPOSE 8080
 
 # Start command
 CMD [ "node", ".output/server/index.mjs" ]
