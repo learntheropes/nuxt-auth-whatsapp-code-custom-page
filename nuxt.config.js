@@ -4,7 +4,6 @@ const isDeployed = (
 ) ? false : true;
 const deploymentDomain = process.env.AUTH_ORIGIN || 'http://localhost:3000';
 
-console.log('process.env.NEXTAUTH_SECRET', process.env.NEXTAUTH_SECRET)
 export default defineNuxtConfig({
   runtimeConfig: {
     nextAuthSecret: process.env.NEXTAUTH_SECRET,
