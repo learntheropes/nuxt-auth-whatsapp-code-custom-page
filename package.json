@@ -13,7 +13,6 @@
     "nuxt": "^3.6.1"
   },
   "dependencies": {
-    "chrome-aws-lambda": "^10.1.0",
     "faunadb": "^4.8.0",
     "mongoose": "^7.3.3",
     "nodemailer": "^6.9.3",
