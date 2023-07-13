@@ -26,18 +26,22 @@ const token = ref(null);
 
 const sendWhatsapp = async () => {
   try {
+
     await signIn('whatsapp', {
       email: phone.value,
       redirect: false,
       callbackUrl: `/dashboard`,
     });
+
     showPhone.value = false
   } catch (error) {
-    alert(error);
+    throw new Error(error);
   }
 };
 const verifyCode = () => {
+
   const route = `/api/auth/callback/whatsapp?callbackUrl=${encodeURIComponent(callbackUrl)}&token=${encodeURIComponent(token.value)}&email=${encodeURIComponent(phone.value)}`;
+  
   navigateTo(`${deploymentDomain}${route}`, {
     external: true,
     redirectCode: 200

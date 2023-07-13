@@ -23,7 +23,7 @@ export default NuxtAuthHandler({
   secret: nextAuthSecret,
   pages: {
     signIn: `/auth/login`,
-    error: '/auth/error'
+    // error: '/auth/error'
   },
   providers: [
     EmailProvider.default({
@@ -40,21 +40,21 @@ export default NuxtAuthHandler({
       },
       sendVerificationRequest: async ({ identifier, url, _provider, _theme }) => {
 
-        // const {
-        //   auth: {
-        //     messageContent
-        //   }
-        // } = await useStorage('db').getItem(`${locale}.json`);
-        const messageContent = 'Your verification code is:';
-
-        const token = new URLSearchParams(url.split('?')[1]).get("token");
-
         try {
+
+          const token = new URLSearchParams(url.split('?')[1]).get("token");
+
+          // const {
+          //   auth: {
+          //     messageContent
+          //   }
+          // } = await useStorage('db').getItem(`${locale}.json`);
+          const messageContent = `Your verification code is: *${token}*`;
          
           await $fetch(`/api/whatsapp/send-message/${identifier}`, {
             method: 'POST',
             body: {
-              message: `${messageContent} *${token}*`
+              message: messageContent
             },
             headers: {
               'content-type': 'application/json',
@@ -62,8 +62,8 @@ export default NuxtAuthHandler({
             }
           });
         } catch (error) {
-
-          throw createError(error);
+          
+          throw new Error(error);
         }
       }
     }),

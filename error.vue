@@ -10,9 +10,7 @@ const handleError = () => clearError({ redirect: '/' });
 <template>
   <div>
     <div>Error Code: {{ error.statusCode }}</div>
-    <devOnly>
-      <div>Error Message: {{ error.statusMessage }}</div>
-    </devOnly>
+    <div>Error Message: {{ error.statusMessage }}</div>
     <devOnly>
       <div>{{ error.stack }}</div>
     </devOnly>

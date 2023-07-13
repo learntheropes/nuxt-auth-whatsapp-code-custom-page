@@ -6,26 +6,34 @@ import QRCode from 'qrcode';
 
 export const getClient = async (mongodbUri) => {
 
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  let client;
+  try {
 
-  await mongoose.connect(mongodbUri);
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  const store = new MongoStore({ mongoose });
+    await mongoose.connect(mongodbUri);
   
-  const client = new Client({
-    puppeteer: {
-      headless: true,
-      args: ['--no-sandbox']
-    },
-    authStrategy: new RemoteAuth({
-      store: store,
-      backupSyncIntervalMs: 60000,
-      dataPath: './temp/'
-    })
-  });
+    const store = new MongoStore({ mongoose });
+    
+    client = new Client({
+      puppeteer: {
+        headless: true,
+        args: ['--no-sandbox']
+      },
+      authStrategy: new RemoteAuth({
+        store: store,
+        backupSyncIntervalMs: 60000,
+        dataPath: './temp/'
+      })
+    });
+  
+  } catch (error) {
+
+    throw new Error(error);
+  }
 
   client.initialize();
-
+  
   client.on('qr', async (qr) => {
     const qrcode = await QRCode.toString(qr,{
       type: 'terminal',
@@ -41,6 +49,10 @@ export const getClient = async (mongodbUri) => {
   
   client.on('auth_failure', msg => {
     console.error('AUTHENTICATION FAILURE', msg);
+    throw createError({
+      statusMessage: `Authentication failure: ${msg}`,
+      statusCode: 500,
+    });
   });
   
   client.on('change_state', async (state) => {
@@ -49,6 +61,10 @@ export const getClient = async (mongodbUri) => {
   
   client.on('disconnected', async (reason) => {
     console.log('DISCONNECTED: ', reason);
+    throw createError({
+      statusMessage: `Disconnected: ${reason}`,
+      statusCode: 500,
+    });
     await sleep(1000 * 5);
     client.initialize();
   });

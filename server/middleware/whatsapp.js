@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const authorization = getHeader(event, 'authorization');
     const token = authorization && authorization.split(' ')[1];
   
-    if (!authorization) {
+    if (!authorization || !token) {
       throw createError({
         statusMessage: 'Unauthenticated',
         statusCode: 401,
