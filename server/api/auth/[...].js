@@ -7,7 +7,8 @@ const {
   nextAuthSecret,
   faunaSecret,
   public: {
-    isDeployed
+    isDeployed,
+    deploymentDomain
   }
 } = useRuntimeConfig();
 
@@ -23,7 +24,10 @@ export default NuxtAuthHandler({
   secret: nextAuthSecret,
   pages: {
     signIn: `/auth/login`,
-    // error: '/auth/error'
+    error: '/auth/error'
+  },
+  theme: {
+    colorScheme: 'light'
   },
   providers: [
     EmailProvider.default({
@@ -35,10 +39,10 @@ export default NuxtAuthHandler({
         return Math.floor(100000 + Math.random() * 900000);
       },
       normalizeIdentifier: (identifier) => {
-
-        return identifier;
+        const num = identifier.trim().replace('+')
+        if (typeof num === 'number') return num;
       },
-      sendVerificationRequest: async ({ identifier, url, _provider, _theme }) => {
+      sendVerificationRequest: async ({ identifier, url }) => {
 
         try {
 
@@ -62,7 +66,7 @@ export default NuxtAuthHandler({
             }
           });
         } catch (error) {
-          
+
           throw new Error(error);
         }
       }

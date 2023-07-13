@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+  auth: false,
+});
+
 const props = defineProps({
   error: Object,
   required: true,

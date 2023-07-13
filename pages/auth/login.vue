@@ -35,8 +35,8 @@ const sendWhatsapp = async () => {
 
     showPhone.value = false
   } catch (error) {
-
-    throw createError(error);
+    console.log('ERRORRRRRRRRRRRRRRRRRRR', error)
+    navigateTo(`/auth/error`) // ?error=${encodeURIComponent(error)}
   }
 };
 const verifyCode = () => {

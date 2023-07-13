@@ -1,5 +1,5 @@
-import wa from 'whatsapp-web.js';
-const { Client, RemoteAuth } = wa
+import whatsappWeb from 'whatsapp-web.js';
+const { Client, RemoteAuth } = whatsappWeb
 import { MongoStore } from 'wwebjs-mongo';
 import mongoose from 'mongoose';
 import QRCode from 'qrcode';
