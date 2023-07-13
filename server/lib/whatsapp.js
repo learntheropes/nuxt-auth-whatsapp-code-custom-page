@@ -19,7 +19,7 @@ export const getClient = async (mongodbUri) => {
       puppeteer: {
         headless: true,
         args: ['--no-sandbox'],
-        ignoreHTTPSErrors: true,
+        executablePath: '/usr/bin/chromium-browser'
       },
       authStrategy: new RemoteAuth({
         store: store,
