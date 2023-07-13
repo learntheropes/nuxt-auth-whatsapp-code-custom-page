@@ -19,10 +19,6 @@ export const getClient = async (mongodbUri) => {
       puppeteer: {
         headless: true,
         args: ['--no-sandbox'],
-        // headless: chromium.headless,
-        // args: chromium.args,
-        // defaultViewport: chromium.defaultViewport,
-        // executablePath: await chromium.executablePath,
         ignoreHTTPSErrors: true,
       },
       authStrategy: new RemoteAuth({

@@ -29,4 +29,4 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_ARGS='--no-sandbox'
 
 # Start command
-CMD [ "node", ".output/server/index.mjs" ] # again replace this with your specific node command to start your app/service
+CMD [ "node", ".output/server/index.mjs" ]
