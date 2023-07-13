@@ -27,6 +27,7 @@ EXPOSE 8080
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_ARGS='--no-sandbox'
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 
 # Start command
 CMD [ "node", ".output/server/index.mjs" ]
