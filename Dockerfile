@@ -1,6 +1,6 @@
 
-# Set the base image to Node 18
-FROM node:18
+# Set the base image to Node 16
+FROM node:16
 
 # Update the repository sources list
 RUN apt-get update && apt-get upgrade -y
