@@ -35,7 +35,8 @@ const sendWhatsapp = async () => {
 
     showPhone.value = false
   } catch (error) {
-    throw new Error(error);
+
+    throw createError(error);
   }
 };
 const verifyCode = () => {
