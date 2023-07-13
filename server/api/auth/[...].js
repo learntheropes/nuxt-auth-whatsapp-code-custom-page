@@ -7,8 +7,7 @@ const {
   nextAuthSecret,
   faunaSecret,
   public: {
-    isDeployed,
-    deploymentDomain
+    isDeployed
   }
 } = useRuntimeConfig();
 
@@ -39,8 +38,7 @@ export default NuxtAuthHandler({
         return Math.floor(100000 + Math.random() * 900000);
       },
       normalizeIdentifier: (identifier) => {
-        const num = identifier.trim().replace('+')
-        if (typeof num === 'number') return num;
+        return identifier;
       },
       sendVerificationRequest: async ({ identifier, url }) => {
 

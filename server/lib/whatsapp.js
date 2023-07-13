@@ -3,6 +3,7 @@ const { Client, RemoteAuth } = whatsappWeb
 import { MongoStore } from 'wwebjs-mongo';
 import mongoose from 'mongoose';
 import QRCode from 'qrcode';
+import chromium from 'chrome-aws-lambda';
 
 export const getClient = async (mongodbUri) => {
 
@@ -18,7 +19,12 @@ export const getClient = async (mongodbUri) => {
     client = new Client({
       puppeteer: {
         headless: true,
-        args: ['--no-sandbox']
+        args: ['--no-sandbox'],
+        // headless: chromium.headless,
+        // args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        ignoreHTTPSErrors: true,
       },
       authStrategy: new RemoteAuth({
         store: store,
