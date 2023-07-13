@@ -6,11 +6,11 @@ const deploymentDomain = process.env.AUTH_ORIGIN || 'http://localhost:3000';
 
 export default defineNuxtConfig({
   runtimeConfig: {
-    nextAuthSecret: process.env.NEXTAUTH_SECRET || $NEXTAUTH_SECRET,
-    faunaSecret: process.env.FAUNA_SECRET || $FAUNA_SECRET,
-    mongodbUri: process.env.MONGODB_URI || $MONGODB_URI,
-    telegramToken: process.env.TELEGRAM_TOKEN || $TELEGRAM_TOKEN,
-    telegramChatId: process.env.TELEGRAM_CHAT_ID || $TELEGRAM_CHAT_ID,
+    nextAuthSecret: process.env.NEXTAUTH_SECRET,
+    faunaSecret: process.env.FAUNA_SECRET,
+    mongodbUri: process.env.MONGODB_URI,
+    telegramToken: process.env.TELEGRAM_TOKEN,
+    telegramChatId: process.env.TELEGRAM_CHAT_ID,
     public: {
       isDeployed,
       deploymentDomain,

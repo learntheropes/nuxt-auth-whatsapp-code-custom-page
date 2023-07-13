@@ -6,7 +6,7 @@ FROM node:16
 RUN apt-get update && apt-get upgrade -y
 
 # Install Chromium
-RUN apt-get install -y chromium
+RUN apt install chromium-browser
 
 # Set the working directory to /app
 WORKDIR /app
