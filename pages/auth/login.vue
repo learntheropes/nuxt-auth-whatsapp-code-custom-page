@@ -35,7 +35,6 @@ const sendWhatsapp = async () => {
 
     showPhone.value = false
   } catch (error) {
-    console.log('ERRORRRRRRRRRRRRRRRRRRR', error)
     navigateTo(`/auth/error`) // ?error=${encodeURIComponent(error)}
   }
 };
@@ -52,6 +51,7 @@ const verifyCode = () => {
 
 <template>
   <NuxtLayout>
+    {{ callbackUrl }}
     <h1>Login</h1>
     <form v-if="showPhone" @submit.prevent="sendWhatsapp">
       <input v-model="phone" />

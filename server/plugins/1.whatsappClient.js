@@ -25,14 +25,11 @@ const defineNitroPlugin = async () => {
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-gpu',
-        '--disable-sync',
-        '--ignore-certificate-errors'
       ],
       defaultViewport: {
-        width: 1366,
-        height: 768
+        width: 800,
+        height: 600
       }
-      // executablePath: (isDeployed) ? '/usr/bin/chromium' : '/usr/bin/chromium-browser'
     },
     authStrategy: new RemoteAuth({
       store: store,
