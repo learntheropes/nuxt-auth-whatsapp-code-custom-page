@@ -5,7 +5,6 @@ export default eventHandler(async event => {
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   const client = getClient();
-  console.log('client', client)
   
   const { message } = await readBody(event);
   const whatsapp = `${event.context.params.phone.replace('+','')}@c.us`;
