@@ -19,6 +19,7 @@ const defineNitroPlugin = async () => {
     puppeteer: {
       headless: true,
       args: ['--no-sandbox'],
+      // executablePath: '/usr/bin/chromium-browser'
     },
     authStrategy: new RemoteAuth({
       store: store,
@@ -64,38 +65,35 @@ const defineNitroPlugin = async () => {
     console.log('CONNECTED');
   });
 
-  console.log('INITIALIZED')
+  console.log('INITIALIZED');
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-
-  console.log('SLEEPED')
 
   const recursive = async () => {
     let state;
     try {
       state = await client.getState();
     } catch (error) {
-      console.log('WAITING FOR STATE')
-      await sleep(1000)
-      await recursive()
+      console.log('WAITING FOR STATE');
+      await sleep(1000);
+      await recursive();
     }
     if (state === 'CONNECTED') {
-      console.log('RETURNING CLIENT')
-      return client
+      console.log('RETURNING CLIENT');
+      return client;
     }
     else {
-      console.log('WAITING ON STATE', state)
-      await sleep(1000)
-      await recursive()
+      console.log('WAITING ON STATE', state);
+      await sleep(1000);
+      await recursive();
     }
   }
 
-  await recursive()
+  await recursive();
 }
 
 const getClient = () => {
-  return client
-}
+  return client;
+};
 
-export { defineNitroPlugin as default, getClient }
+export { defineNitroPlugin as default, getClient };
