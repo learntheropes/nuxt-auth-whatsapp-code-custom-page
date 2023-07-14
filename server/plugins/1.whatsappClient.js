@@ -8,7 +8,10 @@ let client;
 const defineNitroPlugin = async () => {
 
   const { 
-    mongodbUri
+    mongodbUri,
+    public :{
+      isDeployed
+    }
   } = useRuntimeConfig();
 
   await mongoose.connect(mongodbUri);
@@ -19,7 +22,7 @@ const defineNitroPlugin = async () => {
     puppeteer: {
       headless: true,
       args: ['--no-sandbox'],
-      // executablePath: '/usr/bin/chromium-browser'
+      executablePath: (isDeployed) ? '/usr/bin/chromium' : '/usr/bin/chromium-browser'
     },
     authStrategy: new RemoteAuth({
       store: store,
@@ -29,8 +32,6 @@ const defineNitroPlugin = async () => {
   });
 
   client.initialize();
-
-  console.log(client)
 
   client.on('qr', async (qr) => {
     const qrcode = await QRCode.toString(qr,{
