@@ -21,8 +21,11 @@ const defineNitroPlugin = async () => {
   client = new Client({
     puppeteer: {
       headless: true,
-      args: ['--no-sandbox'],
-      executablePath: (isDeployed) ? '/usr/bin/chromium' : '/usr/bin/chromium-browser'
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ],
+      // executablePath: (isDeployed) ? '/usr/bin/chromium' : '/usr/bin/chromium-browser'
     },
     authStrategy: new RemoteAuth({
       store: store,
