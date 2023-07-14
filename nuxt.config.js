@@ -1,8 +1,8 @@
 const isDeployed = (
-  process.env.AUTH_ORIGIN === 'http://localhost:3000'
-  || !process.env.AUTH_ORIGIN
+  process.env.NEXTAUTH_URL === 'http://localhost:3000'
+  || !process.env.NEXTAUTH_URL
 ) ? false : true;
-const deploymentDomain = process.env.AUTH_ORIGIN || 'http://localhost:3000';
+const deploymentDomain = process.env.NEXTAUTH_URL || 'http://localhost:3000';
 
 export default defineNuxtConfig({
   runtimeConfig: {

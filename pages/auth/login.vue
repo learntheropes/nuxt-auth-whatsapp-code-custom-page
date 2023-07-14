@@ -51,7 +51,6 @@ const verifyCode = () => {
 
 <template>
   <NuxtLayout>
-    {{ callbackUrl }}
     <h1>Login</h1>
     <form v-if="showPhone" @submit.prevent="sendWhatsapp">
       <input v-model="phone" />
