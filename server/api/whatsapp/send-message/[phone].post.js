@@ -1,26 +1,17 @@
-import { getClient } from '~/server/lib/whatsapp'
-
-const { 
-  mongodbUri
-} = useRuntimeConfig();
-
-let client, error;
-getClient(mongodbUri)
-  .then((res) => client = res)
-  .catch(err => error = err)
+import { getClient } from '~/server/plugins/1.whatsappClient'
 
 export default eventHandler(async event => {
 
-  if (error) {
-    throw new Error(error);
-  };
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  const client = getClient();
+  console.log('client', client)
   
   const { message } = await readBody(event);
   const whatsapp = `${event.context.params.phone.replace('+','')}@c.us`;
 
   const state = await client.getState();
-
-  if (state === 'CONNECTED') {
+  try {
     const response = await client.sendMessage(whatsapp, message);
 
     if (response.id.fromMe) {
@@ -29,7 +20,8 @@ export default eventHandler(async event => {
         message:`Message successfully sent to ${whatsapp}`
       };
     };
-  };
-
-  throw new Error(error);
+  } catch (error) {
+    console.log('NOT CONNECTED')
+    throw new Error(error);
+  }
 })
