@@ -15,7 +15,7 @@ WORKDIR /app
 COPY . .
 
 # Set environment variable to disable Chromium's sandbox (this is required if you are running as root)
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+ENV PUPPETEER_EXECUTABLE_PATH='/usr/bin/chromium'
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_ARGS='--no-sandbox'
 
