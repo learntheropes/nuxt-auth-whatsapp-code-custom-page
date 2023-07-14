@@ -30,6 +30,8 @@ const defineNitroPlugin = async () => {
 
   client.initialize();
 
+  console.log(client)
+
   client.on('qr', async (qr) => {
     const qrcode = await QRCode.toString(qr,{
       type: 'terminal',
